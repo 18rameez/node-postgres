@@ -160,6 +160,13 @@ class Query extends EventEmitter {
     if (this.values && !Array.isArray(this.values)) {
       return new Error('Query values must be an array')
     }
+    if (this.values) {
+      for (const value of this.values) {
+        if (value === undefined) {
+          return new Error('Query parameter value cannot be undefined.');
+        }
+      }
+    }
     if (this.requiresPreparation()) {
       this.prepare(connection)
     } else {
